@@ -1,5 +1,6 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.*;
@@ -12,12 +13,20 @@ public class main {
         boolean htmlDirectory = in.nextBoolean();
         in.nextLine();
 
+        System.out.println("Is your html file in the sub_documentation directory? Write 'true' or 'false'");
+        boolean sub_doc_directory = in.nextBoolean();
+        in.nextLine();
+
         System.out.println("Enter name of html file. DO NOT WRITE .html.");
         String fileName = in.nextLine();
         String htmlDirectoried = fileName;
 
         if(htmlDirectory) {
             htmlDirectoried = "html\\" + fileName;
+        }
+
+        if(sub_doc_directory) {
+            htmlDirectoried = "html\\sub_documentation\\" + fileName;
         }
 
         in.close();
@@ -38,8 +47,8 @@ public class main {
 
             Document doc = Jsoup.parse(htmlContent.toString());
 
-            Elements bodyElements = doc.select("body");
-            String bodyText = bodyElements.text();
+            Elements bodyElement = doc.select("body");
+            String bodyText = bodyElement.text();
 
             String cleanedText = bodyText.trim();
 
